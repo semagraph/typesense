@@ -35,4 +35,5 @@ defmodule Typesense.MixProject do
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/semagraph/typesense"}
     ]
+  end
 end
