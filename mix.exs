@@ -30,7 +30,7 @@ defmodule Typesense.MixProject do
 
   def package do
     [
-      files: ["lib", "LICENSE", "mix.exs", "README.md", "CHANGELOG.md"],
+      files: ["lib", "LICENSE.md", "mix.exs", "README.md", "CHANGELOG.md"],
       maintainers: ["semagraph"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/semagraph/typesense"}
