@@ -4,7 +4,7 @@ defmodule Typesense.MixProject do
   def project do
     [
       app: :typesense,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       description: "TypeSense API library for Elixir",
