@@ -1,22 +1,38 @@
 defmodule Typesense do
-  @moduledoc """
-  Documentation for `Typesense`.
-  """
+  @moduledoc "README.md"
+  |> File.read!()
+  |> String.split("<!-- MDOC !-->")
+  |> Enum.fetch!(1)
+
   use Tesla
 
-  plug Tesla.Middleware.BaseUrl, "http://localhost:8108"
-  plug Tesla.Middleware.Headers, [{"User-Agent", "Tesla"}, {"X-TYPESENSE-API-KEY", "some-api-key"}]
+  require Logger
+
+  @api_url Application.get_env(:typesense, :api_url, "http://localhost:8108")
+  @api_key Application.get_env(:typesense, :api_key, "")
+
+  plug Tesla.Middleware.BaseUrl, @api_url
+  plug Tesla.Middleware.Headers, [{"X-TYPESENSE-API-KEY", @api_key}]
   plug Tesla.Middleware.JSON
 
   @doc """
-  Returns instance health status.
+  Make a call to the Typesense API.
+  """
+  def get(path), do: Tesla.get(path)
+  def get(path, args), do: Tesla.get(path, args)
+  def post(path, args, opts \\ []), do: Tesla.post(path, args, opts)
+  def delete(path, args), do: Tesla.delete(path, args)
+  def update(path, args), do: Tesla.put(path, args)
 
-  ## Examples
-  iex> Typesense.health()
-  :ok
+  @doc """
+  Returns Typesense instance health status
   """
   def health do
-    get("/health")
+    case Tesla.get("/health") do
+      {:ok, env} ->
+        {:ok, env.body}
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
-
 end
